@@ -39,14 +39,17 @@ class App extends React.Component {
       id: Date.now(),
       complete: false
     }
+ 
 
-    this.setState({
+    let newState = {
       todoList: [...this.state.todoList, newTask],
       task:'',
       id:'',
       complete:false
+    }
 
-    });
+
+    this.setState(newState);
   }
 
   clear = event =>{
