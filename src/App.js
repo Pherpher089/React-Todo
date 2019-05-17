@@ -1,25 +1,8 @@
 import React from 'react';
 import TodoList from './components/TodoComponents/TodoList.js'
-import Todo from './components/TodoComponents/Todo.js'
 import TodoForm from './components/TodoComponents/TodoForm.js'
-
-const toDos = [
-  {
-    task: 'test task 1',
-    id: '',
-    complete: false
-  },
-  {
-    task: 'test task 2',
-    id: '',
-    complete: false
-  },
-  {
-    task: 'test task 3',
-    id: '',
-    complete: false
-  }
-];
+import './components/TodoComponents/Todo.css';
+const toDos = [];
 
 class App extends React.Component {
   // you will need a place to store your state in this component.
@@ -43,16 +26,63 @@ class App extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   };
 
+  submit = event =>{
+    console.log('Submit');
+    event.preventDefault();
+    //stoping empty submitions
+    if(this.state.task === '')
+    {
+      return;
+    }
+    let newTask = {
+      task: this.state.task,
+      id: Date.now(),
+      complete: false
+    }
+
+    this.setState({
+      todoList: [...this.state.todoList, newTask],
+      task:'',
+      id:'',
+      complete:false
+
+    });
+  }
+
+  clear = event =>{
+    event.preventDefault;
+    const newArray = this.state.todoList.filter(item => item.complete === false);
+    this.setState({todoList: newArray});
+  }
+
+  completeTodo = id =>{
+    console.log('Am being called');
+    const newTodoArray = this.state.todoList.map(item => {
+      if(item.id === id){
+        return { ...item, complete: !item.complete}
+      }
+      return item;
+    });
+
+    console.log(newTodoArray);
+    this.setState({todoList: newTodoArray});
+  }
+
   render() {
     return (
-      <div>
-        <h2>Welcome to your Todo App!</h2>
-        <TodoList todoList = {this.state.todoList} />
-        <TodoForm 
-          changeHandler = {this.changeHandler}
-          name = {this.state.name}  
-          task = {this.state.task}
-        />
+      <div className="app">
+        <div className='header'>
+          <h2>Welcome to your Todo App!</h2>
+          <TodoForm 
+            changeHandler = {this.changeHandler}
+            name = {this.state.name}  
+            task = {this.state.task}
+            submit = {this.submit}
+            clear = {this.clear}
+          />
+        </div>
+        <TodoList todoList = {this.state.todoList} completeTodo={this.completeTodo} 
+        id={this.id}/>
       </div>
     );
   }

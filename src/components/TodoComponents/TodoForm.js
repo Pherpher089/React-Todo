@@ -1,6 +1,8 @@
 import React from 'react'
-
+import './Todo.css'
 const TodoForm  = props => {
+    
+
     return(
         <form>
              <input
@@ -10,8 +12,10 @@ const TodoForm  = props => {
                 placeholder="task"
                 name="task"
              />
-            <button>Submit</button>
-            <button>Clear</button>
+             <div className='buttons'>
+                <button onClick={props.submit}>Submit</button>
+                <button onClick={props.clear}>Clear</button>
+             </div>
         </form>
     )
 }
