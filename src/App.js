@@ -50,8 +50,9 @@ class App extends React.Component {
   }
 
   clear = event =>{
-    event.preventDefault;
+    event.preventDefault();
     const newArray = this.state.todoList.filter(item => item.complete === false);
+    console.log(newArray);
     this.setState({todoList: newArray});
   }
 
